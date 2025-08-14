@@ -1,0 +1,19 @@
+#root {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  /*padding: 2rem;*/
+  text-align: center;
+}
+
+.light {
+  background-color: white;
+  color: #1c1c1c;
+  transition: all 0.3s ease;
+}
+
+.dark {
+  background-color: #1c1c1c;
+  color: white;
+  transition: all 0.3s ease;
+}
