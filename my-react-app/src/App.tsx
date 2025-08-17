@@ -1,9 +1,13 @@
-import {useState, useContext, createContext} from 'react'
+import React, {useState, useContext, createContext} from 'react'
 import './App.css'
 
 export function App() {
     return (
-        <ThemeProvider/>
+        <ThemeProvider>
+            <Header/>
+            <Content/>
+            <WrapperContent3/>
+        </ThemeProvider>
     );
 }
 
@@ -16,11 +20,12 @@ type ThemeContextValue = {
 
 const ThemeContext = createContext<ThemeContextValue>({
     theme: "light",
-    toggleTheme: () => {},
+    toggleTheme: () => {
+    },
 });
 const useTheme = () => useContext(ThemeContext);
 
-const ThemeProvider = () => {
+const ThemeProvider = ({children}: React.PropsWithChildren ) => {
     const [theme, setTheme] = useState<Theme>("light");
 
     const toggleTheme = () => {
@@ -28,19 +33,18 @@ const ThemeProvider = () => {
     };
 
     return (
-        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        <ThemeContext.Provider value={{theme, toggleTheme}}>
             <div className={theme}>
-                <Header/>
-                <Content/>
+                {children}
             </div>
         </ThemeContext.Provider>
     );
 }
 
 const Header = () => {
-    const { theme, toggleTheme } = useTheme();
+    const {theme, toggleTheme} = useTheme();
     return (
-        <header className={theme}>
+        <header>
             <h1>Моё приложение</h1>
             <button onClick={toggleTheme}>
                 Switch theme({theme === "light" ? "dark" : "light"})
@@ -52,11 +56,25 @@ const Header = () => {
 const Content = () => {
     const {theme} = useTheme();
     return (
-        <main className={theme}>
+        <main>
             <p>
                 Основной контент. Текущая тема:{" "}
                 <strong>{theme === "light" ? "Светлая" : "Тёмная"}</strong>
             </p>
         </main>
     )
+}
+
+const Content3 = (() => {
+    return (
+        <div>
+            <p>
+                Основной контент.
+            </p>
+        </div>
+    )
+});
+
+const WrapperContent3 = () => {
+    return <Content3/>;
 }
